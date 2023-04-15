@@ -9,10 +9,15 @@ import (
 const _timeoutContext = 5 * time.Second
 
 type Handler struct {
-	user service.IUserAccountService
-	log  *zap.Logger
+	user        service.IUserAccountService
+	transaction service.ITransactionService
+	log         *zap.Logger
 }
 
 func NewHandler(service *service.Manager, log *zap.Logger) *Handler {
-	return &Handler{user: service.User, log: log}
+	return &Handler{
+		user:        service.User,
+		transaction: service.Transaction,
+		log:         log,
+	}
 }
