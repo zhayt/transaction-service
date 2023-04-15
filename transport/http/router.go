@@ -19,5 +19,5 @@ func (s *Server) SetUpRoute() {
 	user.PATCH("", s.handler.UpdateUserAccount)
 	user.DELETE("/:id", s.handler.DeleteUserAccount)
 
-	// v1.POST("/transactions")
+	v1.POST("/transactions", s.handler.CreateTransaction)
 }
