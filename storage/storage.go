@@ -16,8 +16,13 @@ type IUserAccountStorage interface {
 	DeleteUserAccount(ctx context.Context, accountID int) error
 }
 
+type ITransactionStorage interface {
+	CreateTransaction(ctx context.Context, transaction model.Transaction) (uint, error)
+}
+
 type Storage struct {
 	IUserAccountStorage
+	ITransactionStorage
 }
 
 func NewStorage(logger *zap.Logger, cfg *config.Config) (*Storage, error) {
@@ -28,5 +33,6 @@ func NewStorage(logger *zap.Logger, cfg *config.Config) (*Storage, error) {
 
 	return &Storage{
 		IUserAccountStorage: postgres.NewUserAccountStorage(db, logger),
+		ITransactionStorage: postgres.NewTransactionStorage(db, logger),
 	}, nil
 }
