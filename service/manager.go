@@ -15,11 +15,18 @@ type IUserAccountService interface {
 	DeleteUserAccount(ctx context.Context, accountID int) error
 }
 
+type ITransactionService interface {
+	CreateTransaction(ctx context.Context, transaction model.Transaction) (uint, error)
+}
+
 type Manager struct {
-	User IUserAccountService
+	User        IUserAccountService
+	Transaction ITransactionService
 }
 
 func NewManager(storage *storage.Storage, log *zap.Logger) *Manager {
 	return &Manager{
-		User: NewUserAccountService(storage, log)}
+		User:        NewUserAccountService(storage, log),
+		Transaction: NewTransactionService(storage, log),
+	}
 }
